@@ -403,7 +403,40 @@ Asp.net core MVC & Web API
 			Therefore, DbContext should be Scoped.
 			
   
+What is asp.net core ?
+	ASP.NET Core is a cross-platform framework from Microsoft used to build web applications, Web APIs, and backend services.
+	It is fast, lightweight, and supports features like Dependency Injection, Middleware, Routing, and Authentication.
+	For example, we can use ASP.NET Core to build a Web API for an Angular application.
 
+
+.net framework vs .net :
+  .NET Framework is the older Microsoft platform, mainly used for Windows applications and older ASP.NET applications.
+  .NET is the newer, cross-platform platform that runs on Windows, Linux, and macOS.
+  .NET is faster, more modern, and supports technologies like ASP.NET Core, Web API, and modern cloud applications.
+  So, .NET Framework = older and mainly Windows, .NET = modern and cross-platform.
+
+
+What is Kestrel :
+  Kestrel is the default cross-platform web server used by ASP.NET Core applications. 
+  It receives HTTP requests and sends responses back to the client.
+  For example, when we run an ASP.NET Core Web API,
+  Kestrel listens on a port like https://localhost:5001 and handles the requests.
+  
+  
+1.Program.cs :
+  Program.cs is the main entry point of an ASP.NET Core application. It is used to configure services, dependency injection, middleware, routing, and the application pipeline.
+For example, we register services using builder.Services and configure middleware using app.Use...() in Program.cs.
+
+
+2. appsettings.json :
+ 
+  appsettings.json is configuration file used to store application settings in an asp.net core application .
+  It can contain connection strings,logging settings, jwt settings and api url's and other configuration values.
+  We can access these values using IConfiguration or options pattern.
+
+
+3. What is dependency injection ?
+   
 
 ----Sql Inteview Questions--
 
