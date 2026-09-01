@@ -436,8 +436,88 @@ For example, we register services using builder.Services and configure middlewar
 
 
 3. What is dependency injection ?
+    Dependency injection is a technique where a class  gets it required dependencies from outside instead of creating them internally.
+	It promotes loose coupling and makes the code easier to maintain, test and change.
+	
+	without DI:
+        Suppose we have an EmailService class with a SendEmail() method. 
+		If another class like OrderService directly creates EmailService using new EmailService(),
+        then OrderService is tightly coupled to the EmailService implementation.
+		
+		So This creates tight coupling, making unit testing difficult and making it harder to 
+		replace or change the implementation.
+	with DI :
+	   We create an IEmailService interface and implement it using EmailService. Instead of creating EmailService directly, 
+	   OrderService depends on the IEmailService interface and receives it through the constructor.
+	   
+	   This creates loose coupling, makes unit testing easier, 
+	   and allows us to replace the implementation without changing the dependent class.
+	   
+	   
+4. What is the difference between Use, Run, and Map
+   Use, Run, and Map are used to configure the ASP.NET Core middleware pipeline. 
+   Use can execute logic and pass the request to the next middleware,
+   Run is terminal and does not pass the request further, and Map creates a separate pipeline for a specific URL path.
+   For example, Use → continue pipeline, Run → stop pipeline, Map("/admin") → execute a separate pipeline for /admin requests.
    
+5. What is IHost / WebApplication :
+   IHost represents the application host that manages the application lifetime, configuration, logging, and dependency injection. 
+   WebApplication is the modern ASP.NET Core type used to build and run web applications and APIs.
+   In .NET 6+, we commonly use WebApplication in Program.cs to configure services, middleware, and run the application.
+   
+   
+6. What is environment configuration?
+    Environment configuration allows an ASP.NET Core application to use different settings based on the environment,such as Development, Testing, and Production.
+    We can maintain separate configuration files like appsettings.Development.json and appsettings.Production.json.
+    For example, we can use a local database connection in Development and a production database connection in Production.
+	
+7. What are Development, Staging, and Production environments?
+   Development, Staging, and Production are different environments used during the application lifecycle.
+	Development is used by developers for coding and testing, Staging is used for final testing before release, and Production is the live environment used by real users.
+	Each environment can have different configurations like database connections, logging levels, and API settings.
+	
+8. Difference between Scoped and Singleton.
+  Scoped creates one instance per HTTP request, while Singleton creates only one instance for the entire application lifetime.
+Scoped is commonly used for services like DbContext because each request should have its own instance. Singleton is used for shared services like caching or configuration that can be reused across the application.
+In short, Scoped = per request, Singleton = application lifetime.
 
+9. What happens if a Singleton depends on a Scoped service?
+  A Singleton service should not directly depend on a Scoped service because their lifetimes are different.
+  A Singleton is created once for the entire application, while a Scoped service is created once per HTTP request. 
+  If a Singleton holds a Scoped dependency, it may reuse the same scoped instance across multiple requests,
+  causing incorrect behavior. ASP.NET Core throws an exception when it detects this. 
+  The solution is to change the lifetime or create a scope manually using IServiceScopeFactory when required.
+  
+10. How do you register a service?
+   I register a service in Program.cs using build in Dependency injection container. Use different methods like 
+   AddTransient(), AddScoped(), AddSingleton() based on the required lifetime. For example 
+   Register DbContext and services, repositories as Scoped and caching, configuration as Scoped
+   and EmailServices as Transient.
+   
+11. How do you inject a service into a controller?
+   We inject a service into a controller using constructor injection.
+   We define the service interface in the controller constructor, and ASP.NET Core
+   automatically provides the registered implementation through Dependency Injection.
+   For example, public EmployeeController(IEmployeeService employeeService) so it receives the service instance.
+
+12. IOC :
+    IoC stands for Inversion of Control. It is a design principle where object creation and dependency management 
+	are handled by an external framework instead of the class itself. 
+	In ASP.NET Core, IoC is implemented using Dependency Injection.
+	For example, instead of creating a repository object inside a service class, 
+	we inject the repository through the constructor and let the built-in DI container manage its lifetime. 
+	This reduces tight coupling and improves maintainability and testability.
+	
+13. Difference between IoC and DI.
+    IoC is a design principle where the control of object creation and dependency management is moved from the class to the framework.
+	Dependency Injection is a technique used to achieve IoC by providing dependencies from outside the class, usually achieved constructor injection.
+	In ASP.NET Core, the built-in DI container implements IoC by creating and managing service lifetimes.
+	
+14. Entity Framework Core?
+    Entity Framework Core (EF Core) is an ORM (Object Relational Mapper) framework for .NET that allows us to work with databases using C# objects instead of writing SQL queries for every operation.
+    It maps database tables to C# classes and provides features like LINQ queries, CRUD operations, and migrations.
+    For example, we can use DbContext and DbSet to perform database operations in an ASP.NET Core application.
+	
 ----Sql Inteview Questions--
 
 1.ClusteredIndex & NonClusteredIndex
