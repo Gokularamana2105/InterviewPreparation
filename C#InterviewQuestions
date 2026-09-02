@@ -518,6 +518,35 @@ In short, Scoped = per request, Singleton = application lifetime.
     It maps database tables to C# classes and provides features like LINQ queries, CRUD operations, and migrations.
     For example, we can use DbContext and DbSet to perform database operations in an ASP.NET Core application.
 	
+15. EF VS ADO.NET
+   EF Core is an ORM that allows us to work with the database using C# objects and LINQ, so we write less SQL code.
+   ADO.NET is a lower-level approach where we directly work with SQL commands, connections, and data readers.
+   In real-time applications, I would generally use EF Core for normal CRUD operations and
+   use ADO.NET when I need more control over SQL execution or specific performance requirements.
+   
+16. DbContext :
+DbContext is the main class in EF Core that manages the connection between our application and the database.
+It is used to query data, perform CRUD operations, and track changes to entities and those changes using SaveChangesAsync.
+For example, DbSet<Employee> represents the Employees table, and we use DbContext to interact with it.
+
+17. DbSet :
+DbSet represents a database table in Entity Framework Core. We define DbSet properties inside DbContext to perform operations
+ like querying, inserting, updating, and deleting records.
+ For example, DbSet<Claim> Claims represents the Claims table in our healthcare application
+  Easy to remember:
+	DbContext → Database
+	DbSet → Table
+
+18. Code First :
+ Code First is an Entity Framework Core approach where we define the database structure using C# entity classes first. 
+ Then we use EF Core migrations to create or update the database. For example, if I create a Claim class with properties like Id, 
+ PatientName, and Amount, EF Core can create the corresponding Claims table in SQL Server.
+ 
+19. migrations:
+ Migrations are used in Entity Framework Core to manage changes in the database schema.
+ When we change our entity classes, we create a migration, and EF Core generates the required database changes.
+ Then Update-Database applies those changes to the database.
+ 
 ----Sql Inteview Questions--
 
 1.ClusteredIndex & NonClusteredIndex
